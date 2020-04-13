@@ -3,7 +3,9 @@ FROM alpine:3.7
 
 # Install python 3 and pip
 RUN apk add --update python3
-RUN apk install python3-pip
+RUN apk add --no-cache --virtual .build-deps g++ python3-dev libffi-dev openssl-dev && \
+    apk add --no-cache --update python3 && \
+    pip3 install --upgrade pip setuptools
 
 # Install Python modules needed by the Python app
 COPY requirements.txt /usr/src/app/
